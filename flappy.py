@@ -1,10 +1,12 @@
 from itertools import cycle
 import random
 import sys
+import time
 
 import pygame
 from pygame.locals import *
 
+from quantum.utils import get0or1
 
 FPS = 30
 SCREENWIDTH  = 288
@@ -13,6 +15,7 @@ PIPEGAPSIZE  = 100 # gap between upper and lower part of pipe
 BASEY        = SCREENHEIGHT * 0.79
 # image, sound and hitmask  dicts
 IMAGES, SOUNDS, HITMASKS = {}, {}, {}
+COUNT_CHANCES = -99
 
 # list of all possible players (tuple of 3 positions of flap)
 PLAYERS_LIST = (
@@ -60,7 +63,7 @@ def main():
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
     SCREEN = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
-    pygame.display.set_caption('Flappy Bird')
+    pygame.display.set_caption('QuFlapPyBird')
 
     # numbers sprites for score display
     IMAGES['numbers'] = (
@@ -82,6 +85,8 @@ def main():
     IMAGES['message'] = pygame.image.load('assets/sprites/message.png').convert_alpha()
     # base (ground) sprite
     IMAGES['base'] = pygame.image.load('assets/sprites/base.png').convert_alpha()
+
+    IMAGES['schrondingerSave'] = pygame.image.load('assets/sprites/schrondingerSave.png').convert_alpha()
 
     # sounds
     if 'win' in sys.platform:
@@ -186,6 +191,22 @@ def showWelcomeAnimation():
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
+def checkQuantumCrash():
+    global COUNT_CHANCES
+    if COUNT_CHANCES <= 0:
+        if get0or1() == 1:
+            SCREEN.blit(IMAGES['schrondingerSave'], (35, 180))
+            pygame.display.update()
+            time.sleep(1)
+            COUNT_CHANCES = 12
+            return False
+
+        else:
+            return True
+    else:
+        COUNT_CHANCES = COUNT_CHANCES - 1
+        return False
+
 
 def mainGame(movementInfo):
     score = playerIndex = loopIter = 0
@@ -239,7 +260,8 @@ def mainGame(movementInfo):
         # check for crash here
         crashTest = checkCrash({'x': playerx, 'y': playery, 'index': playerIndex},
                                upperPipes, lowerPipes)
-        if crashTest[0]:
+
+        if crashTest[0] and checkQuantumCrash():
             return {
                 'y': playery,
                 'groundCrash': crashTest[1],
