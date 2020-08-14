@@ -1,50 +1,22 @@
-FlapPyBird
+QuFlapPyBird
 ===============
 
-A Flappy Bird Clone made using [python-pygame][pygame]
+A Quantum version of Flappy Bird implemented on IBM Qiskit.  
+A fork of https://github.com/sourabhv/FlapPyBird
+
+What is Quantum here ?
+---------------------------
+1. When you hit a pipe or the ground in the usual flappy bird you die. But here you get a second chance! When you hit an obstacle, a qubit is put into superposition (Hadmard gate) then it is measured. If the cat (_read Schrödinger cat_) is alive i.e probability of 1 dominates you get an another chance otherwise you die.
 
 How-to (as tested on MacOS)
 ---------------------------
 
-1. Install Python 3.x (recommended) 2.x from [here](https://www.python.org/download/releases/)
+1. python3 -m pip install -U pygame==2.0.0.dev6 --user
+2. pip install qiskit
 
-1. Install [pipenv]
+Gameplay clip
+--------------
 
-1. Install PyGame 1.9.x from [here](http://www.pygame.org/download.shtml)
-
-1. Clone the repository:
-
-   ```bash
-   $ git clone https://github.com/sourabhv/FlapPyBird
-   ```
-
-   or download as zip and extract.
-
-1. In the root directory run
-
-   ```bash
-   $ pipenv install
-   $ pipenv run python flappy.py
-   ```
-
-1. Use <kbd>&uarr;</kbd> or <kbd>Space</kbd> key to play and <kbd>Esc</kbd> to close the game.
-
-(For x64 windows, get exe [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame))
-
-Notable forks
--------------
-
-- [FlappyBird Fury Mode](https://github.com/Cc618/FlapPyBird)
-- [FlappyBird Model Predictive Control](https://github.com/philzook58/FlapPyBird-MPC)
-- [FlappyBird OpenFrameworks Port](https://github.com/TheLogicMaster/ofFlappyBird)
-
-Made something awesome from FlapPyBird? Add it to the list :)
-
-
-ScreenShot
-----------
-
-![Flappy Bird](screenshot1.png)
+![Gameplay clip](gameplay1.gif)
 
 [pygame]: http://www.pygame.org
-[pipenv]: https://pipenv.readthedocs.io/en/latest/
